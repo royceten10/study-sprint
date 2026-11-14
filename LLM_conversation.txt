@@ -399,3 +399,61 @@ If you’d like, you can add one sentence explaining why syncing is hard, such a
 What’s left
 
 Send me your reflection in your own words, or tell me to draft #4, and I’ll write it from this conversation. The reflection can mention that you started with a broader tool idea and narrowed it to manual entry of assignments with priorities and point tracking. After that, Part 5 is done, and the worksheet is complete once you paste this chat into Part 7.
+
+Me:
+Using the code we’ve gone over, help me through the 2nd worksheet by going over what to put down for each section. Stop on ones where I need to do it myself.
+
+
+
+LLM:
+The Project 2 page says the repo should contain your brainstorm and design worksheets, and this is the design one. It isn’t scored in the Project 2 rubric, and it covers things you’ve already built. It’s quick to fill out, so here’s what each section needs.
+Section 0: Planning and Preparation
+These questions are about you, so see if you can fill it out yourself. If you can’t let me know and I will generate your ideas. I won’t stop here
+Section 1: Site Diagram
+This one needs a picture, so I’m stopping here for you to choose (see the end of this message).
+Section 2: Implementing Requirements
+This table matches the site as built, so you can paste it in.
+Requirement
+Implementation
+Purpose/Functionality
+Study Sprint is a homework tracker where a student adds assignments, marks them complete, and sees points earned and overall progress.
+State Dataclass Attributes
+student_name: str, set on the welcome page. assignments: list[Assignment], appended to when adding and updated when completing. points_earned: int, increased when an assignment is completed. message: str, set by routes to show errors or confirmations. show_done: bool, toggled to show or hide finished work.
+Second Dataclass
+Assignment has title: str, course: str, points: int, priority: str, and done: bool. The first four are set when it’s created, and done changes to True when the student completes it.
+Routes
+index, set_name, dashboard, show_add_form, add_assignment, show_complete_form, complete_assignment, toggle_done, stats
+Pages
+Welcome (enter name), dashboard (list and points), add-assignment form, mark-complete form, statistics (progress and points per course).
+User Input
+TextBox for name, title, course, and points. SelectBox for priority and for choosing which assignment was finished. CheckBox to confirm an assignment is really done.
+If Statements
+Checks for an empty name; empty, too-long, or duplicate titles and invalid points; whether any assignments are pending; whether the confirm box is checked; and whether finished assignments should be shown. Each changes which page or message appears.
+Loop
+make_rows loops over state.assignments to build the dashboard lines. pending_titles and total_points loop over the same list to build the dropdown and add up points.
+
+LLM Conversation section
+Paste the whole chat here, the same one you put in LLM_conversation.txt.
+Your turn
+Decide on the diagram. Do you want me to generate a simple site diagram image (pages as boxes, buttons as arrows, State fields listed) that you can paste into the doc? Or would you rather sketch it on paper and photograph it? The worksheet suggests 15 to 30 minutes and says rough is fine.
+Tell me which one, and I’ll do the next part.
+
+
+This is a small 3 picture diagram I drew for our website. Make sure the requirements met are visible, and adjust it to make it look better and less rough.
+I’ll combine your three drawings into one labeled diagram. The worksheet asks for route names, labeled arrows, parameters, and the State fields.
+I combined your three drawings into one diagram, site_diagram.png. I checked the layout visually, and the one box-border overflow I spotted is fixed.
+What I added
+Your drawings are unchanged except for the orange items:
+A “Stats” button on the dashboard drawing, since your sketch had no way to reach the statistics page.
+A “Priority” line on the add form drawing. The site has a priority dropdown, but your sketch didn’t show it.
+Refining the other pages in your style: show_complete_form() and stats().
+Labeled arrows showing which button calls which route and what parameters it passes, which the worksheet asks for.
+A box listing the State fields and the Assignment fields, with their types.
+What to do next
+Download site_diagram.png.
+In your copy of the design worksheet, find Section 1 (Site Diagram), then use Insert → Image → Upload from computer to put it on the page after the instructions.
+Paste the Section 0 and Section 2 text from my last message into their table cells, rewording Section 0 so it’s in your own voice.
+Paste your full chat into the LLM Conversation section.
+Download the worksheet as a PDF, add it to your repo (Add file → Upload files), and add its filename to the planning=[...] line in main.py. Redeploy afterward so the About page shows it.
+This worksheet is optional for the Project 2 score, and Project 2 closes tonight at 11:59pm. Before you spend time on the worksheet, check that the site’s latest version is deployed and the URL is submitted.
+
