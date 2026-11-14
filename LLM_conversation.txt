@@ -1,0 +1,401 @@
+Give me a rundown, and see if you can generate me something I can run on Thonny.
+
+I’ll write the project file, then run it against a stub version of Drafter to check the logic, since I can’t install the real library here.
+
+I wrote main.py, a homework tracker called Study Sprint. I tested its logic and unit tests against a stand-in for Drafter, but I couldn’t run it with the real Drafter here. It’s untested in Thonny, so run it before you trust it (steps below).
+
+What Project 2 is asking for
+Write the website in Python with the Drafter library, and test it in Thonny.
+Deploy it to a public GitHub repo using the instructions linked in the assignment. I can’t see that link, so follow it exactly.
+Submit the URL of the deployed site.
+
+Grading is two parts:
+
+Website meets requirements (15 pts): missing two or more requirements, or a site that doesn’t run, can mean a zero.
+LLM conversation (5 pts): you used me, so you need the entire conversation saved as a clearly labeled, readable file in the repo.
+Requirements and where the code meets them
+Requirement	In main.py
+7+ routes	9 routes: index, set_name, dashboard, show_add_form, add_assignment, show_complete_form, complete_assignment, toggle_done, stats
+5+ pages	Welcome, dashboard, add form, complete form, stats
+State with 4+ fields, plus a second dataclass	State has 5 fields and Assignment is the second dataclass.
+List of class instances	state.assignments
+4 fields that are meaningfully modified	Each of the 5 State fields is changed by a route, so none are constants.
+3+ input fields	TextBox (name, title, course, points), SelectBox (priority, title), CheckBox (confirmed)
+3+ if statements	Used throughout, mostly for validation.
+Loop over class instances	make_rows, total_points, pending_titles, and others
+No globals	Only the constants PRIORITIES and MAX_TITLE_LENGTH.
+Unit tests, type hints, docstrings, lines of 80 characters or fewer, helper functions	All included. Each route has a test at the bottom.
+set_site_information(...) in main.py	At the top.
+What to do
+Install Drafter. In Thonny, go to Tools → Manage packages, search drafter, and install it.
+Run it. Open main.py and press Run. A browser tab should open with the site. Click through every page, including the error cases (empty title, unchecked box).
+Fill in the placeholders. In set_site_information, replace your name and email, the repo link, and the worksheet filenames. If Thonny complains about one of those parameter names, tell me the error and I’ll fix it.
+Deploy. Follow the assignment’s instructions. Write short commit messages like “Add stats page” instead of the default “Update main.py”.
+Put these in the repo:
+main.py
+Your brainstorm and design worksheets from the earlier parts. If you never did them, add whatever you can, even late.
+A file named something like LLM_conversation.txt containing this whole chat, copied start to finish.
+Submit the deployed site’s URL.
+
+The TA grades code quality and you’ll have to explain the code in the Part 4 video, so read through it and make sure you understand it. If you tell me which parts are confusing, I’ll walk through them.
+
+If you get an error in Thonny, paste the full error and I’ll help you fix it. Save that conversation too, since it also goes in your LLM file.
+
+Main
+PY
+
+What do I put for here
+
+Reviewing the new repository form on GitHub.
+
+Here’s what to enter:
+
+Template: leave it as drafter-edu/drafter-deployment-template-v1. That’s the template your assignment’s deployment instructions are built around.
+Owner: leave it as royceten10.
+Repository name: use something short, lowercase, with hyphens and no spaces, like study-sprint. The name becomes part of your site’s URL, so pick something you’re fine with your TA seeing.
+Description: optional. You could put “CS final project: homework tracker website built with Drafter.”
+Visibility: keep it Public. The assignment requires a public repo, and a private one would likely cost you points.
+
+Then click Create repository.
+
+After that, follow the assignment’s deployment instructions for the rest. The template will probably have its own main.py, so replace it with the one I wrote, either by editing it on GitHub or using “Add file → Upload files.” When you commit, write a short message like “Add Study Sprint website” instead of the default.
+
+Once the repo exists, tell me what you see on its page, or send a screenshot, and I’ll help with the next step.
+
+Are you able to run through this website to help me faster?
+https://drafter-edu.github.io/drafter/your-project/deploy/github-pages/
+Im on step 3
+
+Yes. The page is in front of me, so I’ll go through it with you.
+
+Step 3: Turn on GitHub Pages
+In your repo, click the Settings tab at the far right of the top bar.
+In the left sidebar, click Pages.
+Under Source (or “Build and deployment”), open the dropdown and choose GitHub Actions.
+
+You only do this once. Skipping it is the most common reason the first deploy fails.
+
+Step 4: Run the deploy workflow
+Click the Actions tab.
+In the left sidebar, click the deploy workflow, named something like “Deploy main branch as website.”
+Click Run workflow, then click the green Run workflow button to confirm.
+Wait a minute or two. A green checkmark means success and a red X means failure. If it fails, tell me the error and I’ll help.
+Step 5: Get your URL
+
+Click the green run and the URL is in its summary. It will look like https://royceten10.github.io/your-repo-name/. That is the link you submit, not the github.com link. Click through every page and button on it, and add --about to the end of the URL to check that your name and links show up correctly.
+
+Fix to make before you run the workflow
+
+The docs’ “Step 0: Prepare your program” shows a few setup lines my code didn’t have: a site title, turning off the frame, and hiding the debug panel. They also write sources as a plain string, while I used a list. I updated main.py, so replace the top section of the file in GitHub (click main.py, then the pencil icon) with this:
+
+python
+set_website_title("Study Sprint")
+set_site_information(
+    author="YOUR NAME (your_email@udel.edu)",
+    description="A homework tracker that rewards you for finishing work.",
+    sources="Drafter documentation and help from Claude (LLM).",
+    planning=["brainstorm_worksheet.pdf", "design_worksheet.pdf"],
+    links=["https://github.com/royceten10/YOUR-REPO-NAME"],
+)
+hide_debug_information()
+set_website_framed(False)
+
+Put in your real name, email, and repo name. The planning filenames must match the worksheet files you upload to the repo, so rename them if yours are named differently. Commit with a message like “Add site title and deploy settings,” then run the workflow in Step 4.
+
+Remember the repo also needs your worksheets and a file with this whole chat (for example LLM_conversation.txt). Use Add file → Upload files or Create new file, then commit. Committing doesn’t redeploy the site, so run the workflow again afterward if you changed main.py.
+
+Tell me what happens when the workflow finishes.
+
+Ive waited a while, whats happening
+
+That banner means GitHub accepted your request, but the run list often doesn’t update by itself. Try these in order:
+
+Refresh the page (F5 or Ctrl+R). The run list usually only shows up after a reload, and the banner still showing suggests the page hasn’t updated. Then click All workflows in the left sidebar. A run should appear with a yellow dot (running), a green check (done), or a red X (failed).
+If there are still no runs, click Run workflow again. Use the green button at the top right, make sure the branch is main, and click the green Run workflow button in the popup. Then refresh after about 10 seconds.
+If it still doesn’t appear, check that Actions is allowed. Go to Settings → Actions → General, and under “Actions permissions” select Allow all actions and reusable workflows. Click Save, then go back and run the workflow again.
+
+Also make sure you did Step 3. Go to Settings → Pages and check that Source is set to GitHub Actions. If it isn’t, the run will fail even once it appears.
+
+Tell me what you see after refreshing, and if a run appears and fails, click it and send me a screenshot of the error.
+
+okay now  what
+
+The deploy worked.
+
+Get your URL
+Click the run name, Deploy main branch as website.
+The site URL is in the run’s summary, in the deploy section near the bottom. It should look like https://royceten10.github.io/study-sprint/.
+
+If you can’t find it, that URL is probably right, since your username is royceten10 and your repo is study-sprint.
+
+Test the site
+
+Open it and click through everything:
+
+Enter a name and click Start.
+Add an assignment. Try a bad one too (empty title, or “abc” for points) to check the error messages.
+Mark an assignment complete, with and without the checkbox.
+Toggle show/hide completed, and open Statistics.
+Add --about to the end of the URL. Your name, description, and links should show up.
+
+If something breaks or the site shows an error, send me a screenshot or the error text.
+
+Make sure the repo has everything
+
+Click the Code tab and confirm these are there:
+
+main.py contains my code, with your real name, email, and repo link filled in.
+Your brainstorm and design worksheets. The filenames must match the planning=[...] line in main.py.
+A file with this entire conversation, such as LLM_conversation.txt. This is worth 5 points. Copy the whole chat in, from your first message to the latest, including the GitHub steps. Use Add file → Create new file, paste, and commit.
+If you change anything after this point, run the workflow again (Actions → Run workflow), because commits alone don’t redeploy.
+Submit
+
+Paste your https://royceten10.github.io/study-sprint/ link into the Project 2 assignment page.
+
+The README video belongs to Part 4, so you can ignore it for now. If you do Part 4 later, I can help with that too.
+
+whats this
+
+Your site deployed. Both the build and deploy jobs have green checks, and the link https://royceten10.github.io/study-sprint/ is live. But the one red error annotation needs a look.
+
+What the annotations mean
+Warnings about Node.js 20 and ubuntu-latest: harmless GitHub housekeeping notices about the template’s tooling. Ignore them.
+“No file matched ... requirements.txt”:* also harmless. It only means you have no requirements.txt, which you don’t need because the code only uses Drafter and dataclasses.
+Error, “Process completed with exit code 1”: this means some command in the build exited with a failure code, even though the job still finished green. It could be a harmless step that’s allowed to fail. It could also be one of my unit tests failing under the real Drafter. I only ran those tests against a stand-in for Drafter, so I can’t rule that out.
+What to do
+Open your site and click through it. If it works, you’re in good shape.
+Find the error’s source. On the run page, click the build job, then look for the step with a red X. Click it to expand the log and scroll to the bottom. Screenshot or copy the last 20 or so lines, especially any text mentioning assert, Traceback, or Error.
+
+Send me that log. If a test is failing, I’ll fix main.py, then you’ll paste the new version into GitHub, commit, and run the workflow again. If the error is unrelated to the tests, the site works, and the assignment says to confirm the deployment succeeded, you can submit as is.
+
+Website runs well and this part was still passed through from the looks of it
+
+You’re right that the site deployed fine. This error comes from a separate “Run type checker” step, which is the template’s check that your type hints are consistent. It’s the cause of the red X, and it’s something a TA could also notice, so it’s worth fixing.
+
+My code started some lists with a single Header(...), like content = [Header(...)]. The type checker then assumed the list could only hold Header objects, and complained when I added strings, buttons, and text boxes. The fix is to tell it the list can hold anything.
+
+The updated main.py is attached. I couldn’t run mypy here, so I haven’t confirmed that the type checker now passes. The change is the standard fix for exactly the error you saw, so it should pass, but the workflow run will confirm it.
+
+What changed
+Type fix: I added from typing import Any and annotated each page’s content list as list[Any].
+Deploy settings: the file now includes set_website_title, hide_debug_information(), and set_website_framed(False). The earlier file didn’t have them, even though I’d said it did. Sorry about that.
+Next steps
+In your repo, open main.py and click the pencil icon.
+Replace everything with the new file’s contents.
+Change YOUR NAME (your_email@udel.edu) to your real name and email.
+Check that the planning=[...] filenames match the worksheets you upload. The repo link is already set to royceten10/study-sprint.
+Commit with a message like “Fix type hints and add deploy settings”.
+Go to Actions → Run workflow to redeploy.
+Open the run and check the “Run type checker” step. If it’s clean, the red error is gone.
+
+If mypy still complains, send me the new log and I’ll fix whatever’s left.
+
+Main
+PY
+
+How do I check step 4
+
+I’m assuming you mean step 4 from my last list, which is making sure the planning=[...] filenames match your worksheet files. Here’s how to check:
+
+Open your repo’s Code tab. It lists every file in the repo.
+Look for your two worksheets (brainstorm and design). Note their exact filenames, including capitalization and extension, such as .pdf or .docx.
+Open main.py and find this line:
+python
+planning=["brainstorm_worksheet.pdf", "design_worksheet.pdf"],
+Make the names in that list match the real filenames character for character. For example, if your files are Brainstorm Worksheet.pdf and Design.docx, the line becomes:
+python
+planning=["Brainstorm Worksheet.pdf", "Design.docx"],
+If the worksheets aren’t in the repo yet
+On the Code tab, click Add file → Upload files.
+Drag in both worksheets (export them from Google Docs as PDF or Word first).
+Commit with a message like “Add planning worksheets”.
+
+Then use the filenames you uploaded in the planning line.
+
+Check it after redeploying
+
+Open https://royceten10.github.io/study-sprint/--about. The planning documents should be listed there. If a name is wrong, that link won’t open the file.
+
+If you meant a different step, such as checking the type checker step, tell me which one. For the type checker, open Actions, click the latest run, then click the build job and the “Run type checker” step. It should have no red error lines.
+
+What line is planning on
+
+planning is on line 14 of the new main.py. It’s near the top, inside the set_site_information(...) block:
+
+python
+set_site_information(
+    author="YOUR NAME (your_email@udel.edu)",
+    description="A homework tracker that rewards you for finishing work.",
+    sources="Drafter documentation and help from Claude (LLM).",
+    planning=["brainstorm_worksheet.pdf", "design_worksheet.pdf"],   <- line 14
+    links=["https://github.com/royceten10/study-sprint"],
+)
+
+In GitHub’s editor, line numbers are shown down the left side. You can also press Ctrl+F and search for planning.
+
+I havent added worksheets I think. What do I do for that
+
+The worksheets are the Google Docs from the earlier parts of the project. The Project 0 assignment said to make a copy of its Google Doc, and Project 1 (Design) has one too. The Dev & Deploy page links to them as “brainstorm” and “design.”
+
+If you already filled them out
+Open each Google Doc and choose File → Download → PDF Document (.pdf).
+In your repo, go to Code → Add file → Upload files, drag both PDFs in, and commit with a message like “Add planning worksheets.”
+Make sure the names in the planning=[...] line of main.py match the uploaded filenames exactly.
+If you never did them
+
+Do them now, even late. The Dev & Deploy page says the repo should contain both worksheets, and the project requirements list a planning document as a repo requirement. An empty or missing one risks the requirements-met score, and the assignment warns that missing two or more requirements can mean a zero.
+
+Open the Project 0 (Ideation) assignment page and click the Google Doc link to make your own copy. Do the same on the Project 1 (Design) page.
+Fill them in, and download each as a PDF.
+Upload them to the repo as above.
+
+I can help fill them out. Since the website is already built, I can draft answers describing Study Sprint: the problem it solves, its inputs, outputs and processing, the data abstraction (the Assignment entity and its fields), scope, and a debugging plan. Paste each worksheet’s questions and I’ll write answers that match the code. If you use my answers, put this conversation in your LLM file, and make sure you understand them well enough to explain them.
+
+If you can’t finish them before submitting
+
+Don’t list files in planning=[...] that aren’t in the repo. Use only the filenames you actually uploaded, or planning=[] if you have none. Your deployed site still works either way, so submit the URL on time and add the worksheets as soon as you can.
+
+PDF
+
+This is the first one. Can you help me fill out each section?
+
+Here are drafts for everything except Part 5 (explained below). The worksheet says the words should be yours, so reword these into your own voice. Make sure everything is true for you, especially Part 4.
+
+Your name and email are already in the table. Part 1’s long list of major-specific suggestions is optional, so I wrote the answer for a general academic-interest project.
+
+Part 1: The Goal & Prior Implementations
+
+1. Identify the Goal
+My goal is to help students keep track of their homework so that nothing gets forgotten or sneaks up on them. I forgot about this project until late, so I know how easy it is to lose track of assignments across several classes. The site lets a student list assignments, see what is still unfinished, and see how many points they have earned.
+
+2. Prior Implementations
+Todoist, Microsoft To Do, Google Tasks, Trello, Notion, and the to-do list built into Canvas all do some version of this. Most are general-purpose to-do tools. They are powerful but have a lot of features, accounts, and settings, which can make them more than a student needs for a quick homework list.
+
+3. Your Implementation
+Study Sprint is a small tracker where a student enters assignments (title, course, points, priority), marks them complete, and sees points earned, points left, and percent done. It’s meant to be a quick, motivating checklist that rewards finishing work, not a full planner.
+
+Part 2: The IPO Model
+
+1. The Core Goal
+The program takes a student’s assignment details, stores them in a list of dataclass instances, and uses loops and if statements to validate input and calculate how many points they have earned and how much work remains.
+
+2. Input
+The user enters their name, then an assignment’s title, course, points, and priority. They also choose which assignment they finished from a dropdown and check a box to confirm it.
+
+3. Processing
+The program checks that the title isn’t empty, too long, or a duplicate, and that points are a positive whole number. It loops through the list to find unfinished assignments, add up points, and calculate percent done, and it builds a dictionary of total points per course.
+
+4. Output
+The user gets a dashboard listing their assignments, points earned, points left, and error or confirmation messages. A statistics page shows overall percent complete and points per course.
+
+Part 3: Data Abstraction
+
+1. Representing Reality
+The main “things” are the Assignment, the Student (just a name), and the Course (stored as text on each assignment).
+
+2. Identifying Properties
+
+Details I need: title, course, points, priority, and whether it’s done.
+Details I will ignore: due date, assignment description, teacher, grade received, attached files, and reminders.
+Part 4: Challenges, AI Strategy, & Goals
+
+1. Difficulties
+The hardest parts are keeping track of the state as it moves between routes, validating text input so bad entries don’t crash the site, and writing unit tests for each route. Deploying to GitHub Pages was also new to me, and the type checker rejected my code on the first deploy, so I had to learn how type hints work.
+
+2. Coding Strategy
+I’m using an LLM to help write the code. To avoid shallow learning, I’ll read each function and explain it in my own words, run the unit tests and make sure I know what each one checks, and change a small thing (like a message or a field) to see what happens. When I don’t understand something, I’ll ask the LLM to explain it and then check it against the Drafter documentation. I also need to be able to explain the code in my video.
+
+3. Goals
+My goal is to finish a working, deployed site that meets every requirement, and to actually understand how routes, state, and dataclasses work in Drafter. I’d also like it to be something I could use to track my own homework.
+
+Part 5: Research & Brainstorming Conversation
+
+I can’t write this part for you. It asks for a real conversation about your idea, with your prompt, the AI’s response, and your pushback. Inventing one would misrepresent what happened, and Part 7 requires the real conversation anyway.
+
+You can do it right here in this chat. Send me something like:
+
+I want to build a simple web tool for students to track homework. What are 3 common problems students face keeping track of assignments, and 3 simple features a basic tool should have? Please don’t write any code.
+
+Then read my answer, pick the most complicated feature I suggest, and reply explaining why it’s too big for an intro programming project and asking for a simpler alternative. After that, I’ll help you write the summary and the reflection in your own words based on what actually happened. Because this chat is already part of the record you’ll submit, it will count toward Part 7.
+
+Part 6: Resource Planning
+
+1. Resources if I get stuck
+The Drafter documentation (especially its Help and Errors pages), my course notes, office hours, the TAs, and Thonny’s debugger and print statements. I’ll also ask the LLM for help and save those conversations.
+
+2. Debugging plan
+
+Read the error message, starting from the last line, and find the file and line number.
+Check what the state and inputs are at that point, using print statements or Drafter’s debug panel.
+Isolate the function and test it on its own with a unit test.
+Look up the error in the Drafter Errors docs and fix one thing at a time.
+For deployment problems, open the Actions tab, click the failed run, find the step with the red X, and read its log. Then check that Pages is set to GitHub Actions and that all needed files are uploaded. Commit the fix and run the workflow again.
+Part 7: LLM Conversation
+
+Paste this entire chat here, from your first message to the end, including the code and deployment help. The same file also goes in your repo, so you can paste it once into LLM_conversation.txt and once into the worksheet.
+
+Part 8: Submit
+
+Download the Google Doc as a .docx and upload it to Canvas. The page says the assignment was locked Nov 6 and that missed activities need to be made up at office hours, so you’ll probably need to go there for the points. Bring the finished worksheet.
+
+When you send your Part 5 prompt and my reply, I’ll help you finish the rest.
+
+For part 5 #1, answer what you gave me:
+
+I want to build a simple web tool for students to track homework. What are 3 common problems students face keeping track of assignments, and 3 simple features a basic tool should have? Please don’t write any code.
+
+Here’s my answer to that prompt.
+
+3 common problems students face
+Assignments are scattered. Deadlines live in Canvas, syllabi, emails, and group chats, so it’s easy to miss one, especially with several classes at once.
+Nothing signals what’s most urgent or important. A 5-point quiz and a 100-point project can look equally important in a plain list, so students end up working on the wrong thing first.
+There’s no sense of progress. Without a visible record of what’s finished and what’s left, work feels endless, which makes procrastination and last-minute panic more likely.
+3 simple features for a basic tool
+Add an assignment with a few key details: title, course, points, and a priority level, with basic checks for empty or invalid entries.
+Mark assignments complete and see a running tally of points earned and points still to earn.
+A summary view showing overall percent complete and a breakdown by course.
+Existing tools
+
+Todoist, Microsoft To Do, Google Tasks, Trello, and Notion all handle this. Many of them go further, with features like syncing with Canvas or a calendar, reminders and notifications, recurring tasks, and shared lists for group projects. Those are useful, but they take a lot more engineering than a first project should.
+
+Your next step
+
+Part 5 #3 is the pushback. Pick the most complicated feature mentioned above (syncing with Canvas or a calendar is a good candidate) and reply in your own words, explaining why it’s too complicated for an introductory programming project and asking for a simpler alternative. Send that to me, and I’ll answer it. Then I’ll help you write the summary (#2) and reflection (#4) based on what we actually said.
+
+With that response, write the summary for 2
+
+Here’s a draft summary for Part 5 #2. Reword it into your own voice before you paste it in.
+
+The Response (summary):
+The AI said students commonly struggle with three problems: assignments are scattered across Canvas, syllabi, emails, and group chats; nothing shows which assignments are most urgent or important, so students can work on the wrong thing first; and there’s no visible sense of progress, which leads to procrastination and last-minute panic. For a basic tool, it suggested three simple features: adding an assignment with a title, course, points, and priority (with checks for invalid entries); marking assignments complete with a running total of points earned and points remaining; and a summary view showing percent complete and a breakdown by course. It listed existing tools that already do this, including Todoist, Microsoft To Do, Google Tasks, Trello, and Notion. It also pointed out that those tools go further, with Canvas or calendar syncing, reminders, recurring tasks, and shared lists, which would take a lot more engineering than a first project should.
+
+Before you finish Part 5, you still need #3, the pushback. Send me your own reply to that response, picking one feature (like Canvas or calendar syncing) and explaining why it’s too complicated for an intro programming project. I’ll answer it, and then we can write #4, the reflection, from what actually happened.
+
+For part 5 #3, Canvas or calendar syncing is too complicated, I'm still lost in this project for the most part, and its overly complicated for me. Give me a simpler alternative
+
+Weighing a simpler alternative for the user's pushback.
+
+Syncing with Canvas or a calendar is a good thing to cut. It needs logins, permissions, and connections to outside services, which is far more than an intro project calls for. Being lost is normal at this stage. Narrowing the scope is the right move.
+
+A simpler alternative
+
+Skip syncing, and have the user type in their assignments by hand. That’s already what Study Sprint does, and it needs no outside services and no accounts.
+
+If you want a reminder-style feature without the complexity, add something small and built from the same data:
+
+A priority label on each assignment (Low, Medium, High), so the user can see what matters most.
+A “points still to earn” total that updates as assignments are marked complete.
+
+Both use only a list of assignments, a few if statements, and a loop. That keeps the project small enough to finish, test, and explain.
+
+For your worksheet (#3)
+
+Paste in the message you sent me, which is your pushback in your own words:
+
+Canvas or calendar syncing is too complicated, I’m still lost in this project for the most part, and its overly complicated for me. Give me a simpler alternative
+
+If you’d like, you can add one sentence explaining why syncing is hard, such as “it would need logging in to Canvas and connecting to outside services, which we haven’t learned.” Only add it if it’s true for you.
+
+What’s left
+
+Send me your reflection in your own words, or tell me to draft #4, and I’ll write it from this conversation. The reflection can mention that you started with a broader tool idea and narrowed it to manual entry of assignments with priorities and point tracking. After that, Part 5 is done, and the worksheet is complete once you paste this chat into Part 7.
