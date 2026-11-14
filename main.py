@@ -11,7 +11,7 @@ set_site_information(
     author="Royce Garrison (royceten@udel.edu)",
     description="A homework tracker that rewards you for finishing work, something I gotta do.",
     sources="Drafter documentation and help from Claude (LLM).",
-    planning=["brainstorm_worksheet.pdf", "design_worksheet.pdf"],
+    planning=["CS1 Final Project 0_ Pick a Problem.pdf"],
     links=["https://github.com/royceten10/study-sprint"],
 )
 hide_debug_information()
