@@ -3,16 +3,19 @@
 Run this file in Thonny to launch the site locally.
 """
 from dataclasses import dataclass
+from typing import Any
 from drafter import *
 
+set_website_title("Study Sprint")
 set_site_information(
     author="Royce Garrison (royceten@udel.edu)",
-    description="A homework tracker that rewards you for finishing work. Something I have to do more often.",
-    sources=["https://drafter-edu.github.io/drafter/"],
+    description="A homework tracker that rewards you for finishing work, something I gotta do.",
+    sources="Drafter documentation and help from Claude (LLM).",
     planning=["brainstorm_worksheet.pdf", "design_worksheet.pdf"],
     links=["https://github.com/royceten10/study-sprint"],
 )
-# hide_debug_information()  # uncomment right before your final deploy
+hide_debug_information()
+set_website_framed(False)
 
 # Global constants are allowed by the project rules.
 PRIORITIES: list[str] = ["Low", "Medium", "High"]
@@ -131,7 +134,7 @@ def check_new_assignment(assignments: list[Assignment], title: str,
 
 def add_form_page(state: State) -> Page:
     """Build the 'add assignment' page without changing the state."""
-    content = [Header("Add an assignment", 2)]
+    content: list[Any] = [Header("Add an assignment", 2)]
     if state.message != "":
         content.append(state.message)
     content.extend([
@@ -148,7 +151,7 @@ def add_form_page(state: State) -> Page:
 def complete_form_page(state: State) -> Page:
     """Build the 'mark complete' page without changing the state."""
     pending = pending_titles(state.assignments)
-    content = [Header("Mark an assignment complete", 2)]
+    content: list[Any] = [Header("Mark an assignment complete", 2)]
     if state.message != "":
         content.append(state.message)
     content.extend([
@@ -169,7 +172,7 @@ def complete_form_page(state: State) -> Page:
 @route
 def index(state: State) -> Page:
     """Welcome page that asks for the student's name."""
-    content = [Header("Study Sprint", 1),
+    content: list[Any] = [Header("Study Sprint", 1),
                "Track your homework and earn points as you finish it."]
     if state.message != "":
         content.append(state.message)
@@ -196,7 +199,7 @@ def set_name(state: State, name: str) -> Page:
 @route
 def dashboard(state: State) -> Page:
     """Main page: shows every assignment and the student's points."""
-    content = [Header(f"{state.student_name}'s Dashboard", 2)]
+    content: list[Any] = [Header(f"{state.student_name}'s Dashboard", 2)]
     if state.message != "":
         content.append(state.message)
     content.append(f"Points earned: {state.points_earned}")
@@ -281,7 +284,7 @@ def toggle_done(state: State) -> Page:
 def stats(state: State) -> Page:
     """Show overall progress and points tracked per course."""
     percent = percent_done(state.assignments)
-    content = [Header("Statistics", 2),
+    content: list[Any] = [Header("Statistics", 2),
                f"Overall progress: {percent}% of tracked points finished"]
     totals = course_totals(state.assignments)
     if len(totals) == 0:
@@ -349,4 +352,3 @@ assert_equal(dashboard(sample_state()).state.student_name, "Sam")
 assert_equal(index(sample_state()).state.student_name, "Sam")
 
 start_server(State("", [], 0, "", True))
-
